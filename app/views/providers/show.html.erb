@@ -1,0 +1,8 @@
+<h1><%= @provider.name %></h1>
+<p><%= @provider.summary %></p>
+<div>
+  <%= link_to "Edit", edit_provider_path(@provider) %><br>
+  <%= link_to "Destroy", @provider, 
+                method: :delete,
+                data: {confirm: "Are you sure?"} %>
+</div>
