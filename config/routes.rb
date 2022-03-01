@@ -5,5 +5,11 @@ Rails.application.routes.draw do
   # get "/shelters", to: "shelters#index"
   # get "/shelters/:id", to: "shelters#show"
 
-  resources :providers
+  resources :providers do
+    resources :reservations
+  end
+
+  resources :users do
+    resources :reservations
+  end
 end

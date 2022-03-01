@@ -1,0 +1,17 @@
+<%= form_with model: [ @provider, @provider.reservations.build ] do |form| %>
+  <p>
+      <%= form.label :user_id %><br>
+      <% usernames = [] %>
+      <% User.all.each do |user| %>
+          <% usernames << [user.username, user.id] %>
+      <% end %>
+      <%= form.select :user_id, usernames %>
+  </p>
+  <p>
+      <%= form.label :date %><br>
+      <%= form.date_field :date %>
+  </p>
+  <p>
+      <%= form.submit %>
+  </p>
+<% end %>
