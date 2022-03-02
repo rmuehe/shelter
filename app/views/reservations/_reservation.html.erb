@@ -7,3 +7,9 @@
   <strong>Reservation:</strong>
   <%= reservation.date %>
 </p>
+
+<p>
+  <%= link_to "Delete Reservation", [reservation.provider, reservation],
+              method: :delete,
+              data: {confirm: "Are you sure?"} %>
+</p>

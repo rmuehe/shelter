@@ -18,7 +18,9 @@
                     data: {confirm: "Are you sure?"} %></li>
 </ul>
 
+<% unless @provider.reservations == [] %>
 <h2>Reservations</h2>
+<% end %>
 <!-- <% @provider.reservations.each do |reservation| %>
   <p>
     <strong>User:</strong>
@@ -30,6 +32,14 @@
     <%= reservation.date %>
   </p>
 <% end %> -->
+
+<%# https://guides.rubyonrails.org/getting_started.html %>
+<%# This will render the partial in app/views/reservations/_reservation.html.erb 
+once for each comment that is in the @article.comments collection. 
+As the render method iterates over the @article.comments collection, 
+it assigns each comment to a local variable named the same as the 
+partial, in this case comment, which is then available in the partial 
+for us to show. %>
 <%= render @provider.reservations %>
 
 <h2>Add a reservation:</h2>
@@ -51,4 +61,8 @@
 </p>
 <% end %> -->
 
+<%# This render just defines the partial template we want 
+to render, reservations/form. Rails is smart enough to spot the forward 
+slash in that string and realize that you want to render the 
+_form.html.erb file in the app/views/reservations directory. %>
 <%= render 'reservations/form' %>

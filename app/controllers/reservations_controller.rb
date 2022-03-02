@@ -20,6 +20,13 @@ class ReservationsController < ApplicationController
   def show
   end
 
+  def destroy
+    @provider = Provider.find(params[:provider_id])
+    @reservation = @provider.reservations.find(params[:id])
+    @reservation.destroy
+    redirect_to provider_path(@provider), status: 303
+  end
+
   private
     def reservation_params
       params.require(:reservation).permit(:user_id, :provider_id, :date)
