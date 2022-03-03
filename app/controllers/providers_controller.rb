@@ -37,7 +37,6 @@ class ProvidersController < ApplicationController
 
   def destroy
     @provider = Provider.find(params[:id])
-    puts params
     @provider.destroy
     
     redirect_to root_path, status: :see_other
