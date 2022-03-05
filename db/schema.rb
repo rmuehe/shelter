@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_28_162454) do
+ActiveRecord::Schema.define(version: 2022_03_04_142025) do
 
   create_table "providers", force: :cascade do |t|
     t.string "name"
@@ -22,12 +22,20 @@ ActiveRecord::Schema.define(version: 2022_02_28_162454) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.date "date"
     t.integer "provider_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_confirmed"
     t.index ["provider_id"], name: "index_reservations_on_provider_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -37,6 +45,7 @@ ActiveRecord::Schema.define(version: 2022_02_28_162454) do
     t.string "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "request_today"
   end
 
   add_foreign_key "reservations", "providers"

@@ -42,6 +42,23 @@ partial, in this case comment, which is then available in the partial
 for us to show. %>
 <%= render @provider.reservations %>
 
+<h2>Requests</h2>
+
+<%# Selects all requests from today only and displays them  %>
+<% requests = Request.all.where(created_at: 
+  Time.now.localtime.beginning_of_day..Time.now.localtime.end_of_day) %>
+<% requests.each do |request| %>
+  <p>
+    <strong>User:</strong>
+    <%= request.user.username %>
+  </p>
+
+  <p>
+    <strong>Request:</strong>
+    <%= request.created_at.localtime.strftime("%B %e, %Y at %I:%M %p") %>
+  </p>
+<% end %>  
+
 <h2>Add a reservation:</h2>
 <!-- <%= form_with model: [ @provider, @provider.reservations.build ] do |form| %>
 <p>

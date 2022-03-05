@@ -11,5 +11,11 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :reservations
+
+    # post '/users/:user_id/requests', to: 'request#create', as: 'create_user_request'
+    post '/requests', to: 'requests#create', as: 'create_request'
+    delete '/requests', to: 'requests#destroy', as: 'destroy_request'
+    resources :requests
   end
+
 end

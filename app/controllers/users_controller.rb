@@ -1,6 +1,19 @@
 class UsersController < ApplicationController
   # def _form
   # end
+  # def request
+  #   # @user = User.find(params[:user_id])
+  #   @user = User.find(params[:id])
+  #   # @request = @user.requests.create(request_params)
+  #   @request = @user.requests.create
+  #   redirect_to user_path(@user)
+  # end
+
+  # def request1
+  #    @request1 = User.find(params[:id])  
+  #   Request.create(user_id: @request1.id)
+  #    redirect_to user_path(@user)
+  # end
 
   def index
     @users = User.all

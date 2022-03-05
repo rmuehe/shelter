@@ -11,3 +11,29 @@
                     method: :delete,
                     data: {confirm: "Are you sure?"} %></li>
 </ul>
+
+<h1> <%= params %> </h1>
+
+<% flash.each do |type, msg| %>
+  <div style="color: lightpurple">
+    <%= msg %>
+  </div>
+<% end %>
+
+<%= button_to "Request a reservation", user_create_request_path(@user), method: "post" %>
+
+<% if !@user.requests.last %>
+  <div style="color: lightred">No reservation requests</div>   
+<% end %>
+
+<% if @user.requests.last %>
+  <% if @user.requests.last.created_at.localtime.to_date == Time.now.localtime.to_date %>
+    <div style="color: lightgreen">Reservation requested today</div>
+  <% else %>
+    <div style="color: lightred">No reservation requests today</div>
+  <% end %>
+<% end %>
+
+<%= button_to "Cancel a request", user_destroy_request_path(@user), 
+                method: "delete", 
+                data: {confirm: "Are you sure?"} %>

@@ -2,7 +2,8 @@
   <p>
       <%= form.label :user_id %><br>
       <% usernames = [] %>
-      <% User.all.each do |user| %>
+      <% users = User.all.order(:username)%>
+      <% users.each do |user| %>
           <% usernames << [user.username, user.id] %>
       <% end %>
       <%= form.select :user_id, usernames %>
