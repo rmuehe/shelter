@@ -12,8 +12,6 @@
                     data: {confirm: "Are you sure?"} %></li>
 </ul>
 
-<h1> <%= params %> </h1>
-
 <% flash.each do |type, msg| %>
   <div style="color: lightpurple">
     <%= msg %>
@@ -37,3 +35,32 @@
 <%= button_to "Cancel a request", user_destroy_request_path(@user), 
                 method: "delete", 
                 data: {confirm: "Are you sure?"} %>
+
+<% if @user.reservations.last %>
+  <% if @user.reservations.last.date == Time.now.localtime.to_date %>
+    <% provider = @user.reservations.last.provider %>
+    
+    <h2 style="color: green">Reservation request approved by</h2>
+    <h3 style="color: goldenrod"><%= provider.name %></h3>
+      <% unless !provider.summary || provider.summary.strip == "" %>
+        <p><%= provider.summary %></p>
+      <% end %>
+      <% unless !provider.phone || provider.phone.strip == "" %>
+        <p>phone: <%= provider.phone %></p>
+      <% end %>
+      <% unless !provider.website || provider.website.strip == "" %>
+        <p>website: <%= provider.website %></p>
+      <% end %>  
+      <% unless !provider.serving || provider.serving.strip == "" %>
+        <p>serving: <%= provider.serving %></p>
+      <% end %>
+
+    <%= button_to "Confirm Reservation", user_update_reservation_path(@user), 
+                method: "put", 
+                data: {confirm: "Reservation will be confirmed with " + 
+                  provider.name } %>
+    <% if @user.reservations.last.is_confirmed %>
+      <h2 style="color: green">Confirmed with <%= provider.name %><h2>
+    <% end %>                  
+  <% end %>
+<% end %>

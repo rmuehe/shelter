@@ -16,6 +16,30 @@
   </div>
 
   <div>
+    <%= form.label :phone %><br>
+    <%= form.text_field :phone %>
+    <% provider.errors.full_messages_for(:phone).each do |message| %>
+      <div style="color: red"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :website %><br>
+    <%= form.text_field :website %>
+    <% provider.errors.full_messages_for(:website).each do |message| %>
+      <div style="color: red"><%= message %></div>
+    <% end %>
+  </div>
+
+    <div>
+    <%= form.label :serving, "Populations Served" %><br>
+    <%= form.text_field :serving %>
+    <% provider.errors.full_messages_for(:serving).each do |message| %>
+      <div style="color: red"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

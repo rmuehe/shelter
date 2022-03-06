@@ -11,6 +11,18 @@
 
 <p><%= @provider.summary %></p>
 
+<% unless !@provider.phone || @provider.phone.strip == "" %>
+  <p><%= @provider.phone %></p>
+<% end %>
+
+<% unless !@provider.website || @provider.website.strip == "" %>
+  <p><%= @provider.website %></p>
+<% end %>
+
+<% unless !@provider.serving || @provider.serving.strip == "" %>
+  <p>serving: <%= @provider.serving %></p>
+<% end %>
+
 <ul>
 <li><%= link_to "Edit", edit_provider_path(@provider) %></li>
 <li><%= link_to "Destroy", @provider, 
@@ -42,11 +54,14 @@ partial, in this case comment, which is then available in the partial
 for us to show. %>
 <%= render @provider.reservations %>
 
-<h2>Requests</h2>
-
-<%# Selects all requests from today only and displays them  %>
-<% requests = Request.all.where(created_at: 
+<%# Selects all unapproved requests from today only and displays them  %>
+<% requests = Request.all.where(is_approved: false, created_at: 
   Time.now.localtime.beginning_of_day..Time.now.localtime.end_of_day) %>
+<% unless requests == [] %>
+  <h2>Requests</h2>
+  <p>Be sure to reserve a client before approving a request</p>
+  <p>Approving a request removes it from the queue</p>
+<% end %>
 <% requests.each do |request| %>
   <p>
     <strong>User:</strong>
@@ -57,6 +72,10 @@ for us to show. %>
     <strong>Request:</strong>
     <%= request.created_at.localtime.strftime("%B %e, %Y at %I:%M %p") %>
   </p>
+
+  <%= button_to "Approve Request", user_update_request_path(request.user), 
+                method: "put",
+                data: {confirm: "Are you sure?\nApproval removes the request"} %>
 <% end %>  
 
 <h2>Add a reservation:</h2>

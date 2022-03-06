@@ -5,7 +5,15 @@ class ReservationsController < ApplicationController
   def create
     @provider = Provider.find(params[:provider_id])
     @reservation = @provider.reservations.create(reservation_params)
+    @reservation.update(is_confirmed: false)
     redirect_to provider_path(@provider)
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @reservation = @user.reservations.last
+    @reservation.update(is_confirmed: true)
+    redirect_to user_path(@user)
   end
 
   def edit
