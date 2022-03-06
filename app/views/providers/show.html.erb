@@ -1,0 +1,104 @@
+<!-- <h1><%= @provider.name %></h1>
+<p><%= @provider.summary %></p>
+<div>
+  <%= link_to "Edit", edit_provider_path(@provider) %><br>
+  <%= link_to "Destroy", @provider, 
+                method: :delete,
+                data: {confirm: "Are you sure?"} %>
+</div> -->
+
+<h1><%= @provider.name %></h1>
+
+<p><%= @provider.summary %></p>
+
+<% unless !@provider.phone || @provider.phone.strip == "" %>
+  <p><%= @provider.phone %></p>
+<% end %>
+
+<% unless !@provider.website || @provider.website.strip == "" %>
+  <p><%= @provider.website %></p>
+<% end %>
+
+<% unless !@provider.serving || @provider.serving.strip == "" %>
+  <p>serving: <%= @provider.serving %></p>
+<% end %>
+
+<ul>
+<li><%= link_to "Edit", edit_provider_path(@provider) %></li>
+<li><%= link_to "Destroy", @provider, 
+                    method: :delete,
+                    data: {confirm: "Are you sure?"} %></li>
+</ul>
+
+<% unless @provider.reservations == [] %>
+<h2>Reservations</h2>
+<% end %>
+<!-- <% @provider.reservations.each do |reservation| %>
+  <p>
+    <strong>User:</strong>
+    <%= reservation.user.username %>
+  </p>
+
+  <p>
+    <strong>Reservation:</strong>
+    <%= reservation.date %>
+  </p>
+<% end %> -->
+
+<%# https://guides.rubyonrails.org/getting_started.html %>
+<%# This will render the partial in app/views/reservations/_reservation.html.erb 
+once for each comment that is in the @article.comments collection. 
+As the render method iterates over the @article.comments collection, 
+it assigns each comment to a local variable named the same as the 
+partial, in this case comment, which is then available in the partial 
+for us to show. %>
+<%= render @provider.reservations %>
+
+<%# Selects all unapproved requests from today only and displays them  %>
+<% requests = Request.all.where(is_approved: false, created_at: 
+  Time.now.localtime.beginning_of_day..Time.now.localtime.end_of_day) %>
+<% unless requests == [] %>
+  <h2>Requests</h2>
+  <p>Be sure to reserve a client before approving a request</p>
+  <p>Approving a request removes it from the queue</p>
+<% end %>
+<% requests.each do |request| %>
+  <p>
+    <strong>User:</strong>
+    <%= request.user.username %>
+  </p>
+
+  <p>
+    <strong>Request:</strong>
+    <%= request.created_at.localtime.strftime("%B %e, %Y at %I:%M %p") %>
+  </p>
+
+  <%= button_to "Approve Request", user_update_request_path(request.user), 
+                method: "put",
+                data: {confirm: "Are you sure?\nApproval removes the request"} %>
+<% end %>  
+
+<h2>Add a reservation:</h2>
+<!-- <%= form_with model: [ @provider, @provider.reservations.build ] do |form| %>
+<p>
+    <%= form.label :user_id %><br>
+    <% usernames = [] %>
+    <% User.all.each do |user| %>
+    <% usernames << [user.username, user.id] %>
+    <% end %>
+    <%= form.select :user_id, usernames %>
+</p>
+<p>
+    <%= form.label :date %><br>
+    <%= form.date_field :date %>
+</p>
+<p>
+    <%= form.submit %>
+</p>
+<% end %> -->
+
+<%# This render just defines the partial template we want 
+to render, reservations/form. Rails is smart enough to spot the forward 
+slash in that string and realize that you want to render the 
+_form.html.erb file in the app/views/reservations directory. %>
+<%= render 'reservations/form' %>

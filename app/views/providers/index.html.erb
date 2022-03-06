@@ -1,0 +1,20 @@
+<%# <h1>Shelters#index</h1>
+<p>Find me in app/views/shelters/index.html.erb</p> %>
+
+<h1>Shelters</h1>
+
+<ul>
+  <% @providers.each do |provider| %>
+    <li>
+      <!-- <%= provider.name %> -->
+      
+      <!-- <a href="/shelters/<%= provider.id %>"> -->
+      <!-- <a href="<%= provider_path(provider) %>"> -->
+      <%= link_to provider.name, provider %>
+      <!--  <%= provider.name %> -->
+      <!-- </a> -->
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Provider", new_provider_path %>
