@@ -15,6 +15,11 @@ class UsersController < ApplicationController
   #    redirect_to user_path(@user)
   # end
 
+  # devise helper
+  # redirects to login page if user isn't signed in
+  before_action :authenticate_admin!
+
+
   def index
     @users = User.all
   end
