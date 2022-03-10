@@ -1,0 +1,14 @@
+<h1>Dashboard::Dashboard#index</h1>
+<p>Find me in app/views/dashboard/dashboard/index.html.erb</p>
+
+
+<% if user_signed_in? %>
+    <p>I'm a User</p>
+    <p><%= params.inspect %></p>
+    <p><%= current_user.inspect %></p>
+<% end %>
+
+<% if provider_signed_in? %>
+    <p>I'm a Provider</p>
+    <p><%= params.inspect %></p>
+<% end %>

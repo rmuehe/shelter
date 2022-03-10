@@ -1,8 +1,28 @@
 Rails.application.routes.draw do
-  devise_for :admins
+  namespace :dashboard do
+    get 'dashboard/index'
+  end
+  get 'home/index'
+  devise_for :users
+  devise_for :providers
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root "users#new" 
+  # root "users#new" 
+ 
+   root 'home#index'
+  # root "dashboard#index"
   
+  namespace :dashboard do
+    # authenticated :user do
+    #   resources :users, module: "user", :only => [:show, :index]
+    # end
+
+    # authenticated :provider do
+    #   resources :providers, module: "provider"
+    # end
+      
+    root to: "dashboard#index"
+  end
+
   # get "/shelters", to: "shelters#index"
   # get "/shelters/:id", to: "shelters#show"
 

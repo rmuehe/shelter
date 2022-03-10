@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_06_181204) do
+ActiveRecord::Schema.define(version: 2022_03_10_010328) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2022_03_06_181204) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "type"
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
@@ -59,6 +61,10 @@ ActiveRecord::Schema.define(version: 2022_03_06_181204) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "request_today"
+    t.integer "admin_id"
+    t.integer "provider_id"
+    t.index ["admin_id"], name: "index_users_on_admin_id"
+    t.index ["provider_id"], name: "index_users_on_provider_id"
   end
 
   add_foreign_key "reservations", "providers"

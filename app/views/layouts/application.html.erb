@@ -11,6 +11,17 @@
   </head>
 
   <body style="background-color: black; color: pink">
+    <br><br>
+    <nav>
+        Navigation
+        <% if user_signed_in? %>
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+        <% end %>
+        <% if provider_signed_in? %>
+            <%= link_to 'Log out', destroy_provider_session_path, method: :delete %>
+        <% end %>
+    </nav>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
