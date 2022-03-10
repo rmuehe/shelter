@@ -36,6 +36,27 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  
+  # https://github.com/rspec/rspec-rails
+	# https://rspec.info/documentation/
+  gem 'rspec-rails'
+  
+  # factory_bot provides a framework and DSL for defining and using model instance factories.
+	# https://github.com/thoughtbot/factory_bot
+  gem 'factory_bot_rails'
+  
+  # Easily generate fake data
+	# https://github.com/faker-ruby/faker
+	#  https://rubydoc.info/github/faker-ruby/faker/master
+  gem 'faker'
+  
+  # Extracting `assigns` and `assert_template` from ActionDispatch.
+	# https://github.com/rails/rails-controller-testing
+  gem 'rails-controller-testing'
+  
+  # An XML toolkit for Ruby
+  # Homepage: https://github.com/ruby/rexml
+  gem 'rexml'
 end
 
 group :development do
@@ -59,3 +80,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Generates nicer views for Devise that use Bootstrap
+# https://github.com/afomera/devise-bootstrapped
+gem 'devise-bootstrapped', github: 'king601/devise-bootstrapped', branch: 'bootstrap4'
