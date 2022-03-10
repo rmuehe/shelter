@@ -3,17 +3,20 @@
 
 <h1>Shelter</h1>
   <h2>Reservation System</h2>
-  <% unless user_signed_in? %>
-    <%= link_to "Sign In", new_user_session_path %> <br>
-    <%= link_to "Sign Up", new_user_registration_path %><br>
-  <% end %>
+  <% if !user_signed_in?  && !provider_signed_in? %>
+    <%= link_to "Client Sign In", new_user_session_path %> <br>  
+    <%= link_to "Client Sign Up", new_user_registration_path %><br><br>
+    
+    <%= link_to "Provider Sign In", new_provider_session_path %> <br>
+    <%= link_to "Provider Sign Up", new_provider_registration_path %><br>
+  
   <br>
-  <% if user_signed_in? && current_user.username.nil? %>
-    <%= link_to "New User", edit_user_path(current_user) %><br>
-    <%= link_to "Sign Out", destroy_user_session_path,
-              method: :delete %>
-  <% elsif signed_in? %>
+  <% elsif user_signed_in? %>
     <%= link_to "Request Reservation", user_path(current_user) %>
     <%= link_to "Sign Out", destroy_user_session_path,
+              method: :delete %>
+  <% elsif provider_signed_in? %>
+    <%= link_to "Make Reservations", provider_path(current_provider) %>
+    <%= link_to "Sign Out", destroy_provider_session_path,
               method: :delete %>
   <% end %>

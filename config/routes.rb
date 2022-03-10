@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'home/index'
-  devise_for :providers
-  devise_for :users
+  devise_for :providers, :controllers => { registrations: 'providers/registrations' }
+  devise_for :users, :controllers => { registrations: 'users/registrations' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # root "providers#index"
   
