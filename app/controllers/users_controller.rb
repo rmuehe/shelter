@@ -15,6 +15,8 @@ class UsersController < ApplicationController
   #    redirect_to user_path(@user)
   # end
 
+  before_action :authenticate_user!
+
   def index
     @users = User.all
   end

@@ -1,12 +1,14 @@
 <%# <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p> %>
 
+<% if current_user.id == params[:id].to_i %>
+
 <h1><%= @user.username %></h1>
 
 <p><%= @user.role %></p>
 
 <ul>
-  <li><%= link_to "Edit", edit_user_path(@user) %></li>
+  <li><%= link_to "Edit", edit_user_registration_path(@user) %></li>
   <li><%= link_to "Destroy", @user, 
                     method: :delete,
                     data: {confirm: "Are you sure?"} %></li>
@@ -63,4 +65,16 @@
       <h2 style="color: green">Confirmed with <%= provider.name %><h2>
     <% end %>                  
   <% end %>
+<% end %>
+
+<% else %>
+
+  <% if user_signed_in? %> 
+    <em> Not authorized, <%= current_user.username %> </em><br>
+  <% else %>
+    <em> Not authorized, <%= current_provider.name %> </em><br>
+  <% end %> <br><br>
+
+  <%= link_to "Back", :back %>
+
 <% end %>

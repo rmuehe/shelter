@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_05_202905) do
+ActiveRecord::Schema.define(version: 2022_03_10_044849) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "type"
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
 
   create_table "providers", force: :cascade do |t|
     t.string "name"
@@ -20,6 +34,13 @@ ActiveRecord::Schema.define(version: 2022_03_05_202905) do
     t.string "serving"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_providers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_providers_on_reset_password_token", unique: true
   end
 
   create_table "requests", force: :cascade do |t|
@@ -47,6 +68,17 @@ ActiveRecord::Schema.define(version: 2022_03_05_202905) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "request_today"
+    t.integer "admin_id"
+    t.integer "provider_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["admin_id"], name: "index_users_on_admin_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["provider_id"], name: "index_users_on_provider_id"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "reservations", "providers"

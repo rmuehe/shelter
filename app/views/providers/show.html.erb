@@ -7,6 +7,8 @@
                 data: {confirm: "Are you sure?"} %>
 </div> -->
 
+<% if current_provider.id == params[:id].to_i %>
+
 <h1><%= @provider.name %></h1>
 
 <p><%= @provider.summary %></p>
@@ -24,7 +26,7 @@
 <% end %>
 
 <ul>
-<li><%= link_to "Edit", edit_provider_path(@provider) %></li>
+<li><%= link_to "Edit", edit_provider_registration_path(@provider) %></li>
 <li><%= link_to "Destroy", @provider, 
                     method: :delete,
                     data: {confirm: "Are you sure?"} %></li>
@@ -102,3 +104,16 @@ to render, reservations/form. Rails is smart enough to spot the forward
 slash in that string and realize that you want to render the 
 _form.html.erb file in the app/views/reservations directory. %>
 <%= render 'reservations/form' %>
+
+<% else %>
+
+  <% if provider_signed_in? %> 
+    <em> Not authorized, <%= current_provider.name %> </em><br>
+  <% else %>
+    <em> Not authorized, <%= current_user.username %> </em><br>
+  <% end %> <br><br>
+
+  <%= link_to "Back", :back %>
+
+
+<% end %>
