@@ -260,7 +260,7 @@ DEPENDENCIES
   devise (~> 4.2)
   devise-bootstrapped!
   factory_bot_rails
-  faker
+  faker (~> 2.20)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   puma (~> 5.0)

@@ -4,9 +4,8 @@ class Provider < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :summary, presence: true
-
   # validates :phone, presence: true
   # validates :serving, presence: true
 

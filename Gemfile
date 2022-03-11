@@ -48,7 +48,7 @@ group :development, :test do
   # Easily generate fake data
 	# https://github.com/faker-ruby/faker
 	#  https://rubydoc.info/github/faker-ruby/faker/master
-  gem 'faker'
+  gem 'faker', '~> 2.20'
   
   # Extracting `assigns` and `assert_template` from ActionDispatch.
 	# https://github.com/rails/rails-controller-testing

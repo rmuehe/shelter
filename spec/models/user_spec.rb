@@ -22,12 +22,14 @@ RSpec.describe User, type: :model do
     expect(subject).to_not be_valid
   end
 
-#  subject(:user) { FactoryBot.build(:user, email: email) }
-#   context "If the email is duplicated" do
-#     existed_user =  User.find_by(username: "existed_user") || FactoryBot.create(:existed_user)
-#     let(:email) { existed_user.email }
-#     it { is_expected.to be_invalid }
-#    end
+  it "is not valid if username is not unique" do
+    User.create(username: "Jack", email: "mail@place.com", password: "123456" )
+    expect(subject).to_not be_valid
+  end
 
-  
+  it "is not valid if email is not unique" do
+    User.create(username: "Jessica", email: "jsmith@sample.com", password: "123456" )
+    expect(subject).to_not be_valid
+  end
+
 end
