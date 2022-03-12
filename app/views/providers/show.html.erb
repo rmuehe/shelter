@@ -6,7 +6,35 @@
                 method: :delete,
                 data: {confirm: "Are you sure?"} %>
 </div> -->
+<% if current_provider.id == params[:id].to_i %>
 
+<div class="card text-pink bg-dark mb-3" style="width: 18rem;">
+  <div class="card-body">
+    <h1 class="card-title"><%= @provider.name %></h1>
+    <p class="card-text"><%= @provider.summary %></p>
+    <% unless !@provider.phone || @provider.phone.strip == "" %>
+      <p class="card-text"><%= @provider.phone %></p>
+    <% end %>
+
+    <% unless !@provider.website || @provider.website.strip == "" %>
+      <p class="card-text"><%= @provider.website %></p>
+    <% end %>
+
+    <% unless !@provider.serving || @provider.serving.strip == "" %>
+      <p class="card-text">serving: <%= @provider.serving %></p>
+    <% end %>
+    <%= button_to "Edit", edit_provider_registration_path(@provider), class: "btn-primary" %>
+    <%= button_to "Destroy", @provider, 
+                    method: :delete,
+                    data: {confirm: "Are you sure?"}, 
+                    class: "btn-danger" %>
+    <%# <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a href="#" class="btn btn-primary">Go somewhere</a> %>
+  </div>
+</div>
+<% end %>
+
+<!--
 <% if current_provider.id == params[:id].to_i %>
 
 <h1><%= @provider.name %></h1>
@@ -31,7 +59,7 @@
                     method: :delete,
                     data: {confirm: "Are you sure?"} %></li>
 </ul>
-
+-->
 <% unless @provider.reservations == [] %>
 <h2>Reservations</h2>
 <% end %>
@@ -47,24 +75,66 @@
   </p>
 <% end %> -->
 
+<% count = 0 %>
+
+<table class="table caption-top table-sm table-dark table-striped table-hover table-bordered">
+  <caption>List of reservations set by provider</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User</th>
+      <th scope="col">Date Appointed</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
 <%# https://guides.rubyonrails.org/getting_started.html %>
 <%# This will render the partial in app/views/reservations/_reservation.html.erb 
 once for each comment that is in the @article.comments collection. 
 As the render method iterates over the @article.comments collection, 
 it assigns each comment to a local variable named the same as the 
 partial, in this case comment, which is then available in the partial 
-for us to show. %>
-<%= render @provider.reservations %>
+for us to show. 
+<erb= render @provider.reservations erb> 
+%>
+
+
+
+  <% @provider.reservations.each do |reservation| %>
+    <tr>
+    <% count += 1%>
+      <th scope="row"><%= count %></th>
+      <td><%= reservation.user.username %></td>
+      <td><%= reservation.date.strftime("%B %e, %Y")%></td>
+      <td>
+        <% if reservation.is_confirmed %>
+          <strong style="color: lightgreen">Confirmed</strong>
+        <% else %>
+          <strong style="color: red">Not Confirmed</strong>
+        <% end %>
+      </td>
+      <td>
+        <%= button_to "Delete Reservation", [reservation.provider, reservation],
+                  method: :delete,
+                  data: {confirm: "Are you sure?"},
+                  class: "btn-danger" %>
+      </td>
+    </tr>
+  <% end %>  
+  </tbody>
+</table>
 
 <%# Selects all unapproved requests from today only and displays them  %>
 <% requests = Request.all.where(is_approved: false, created_at: 
   Time.now.localtime.beginning_of_day..Time.now.localtime.end_of_day) %>
 <% unless requests == [] %>
   <h2>Requests</h2>
-  <p>Be sure to reserve a client before approving a request</p>
-  <p>Approving a request removes it from the queue</p>
+  <%# <p>Be sure to reserve a client before approving a request</p>
+  <p>Approving a request removes it from the queue</p> %>
 <% end %>
-<% requests.each do |request| %>
+
+<!-- <% requests.each do |request| %>
   <p>
     <strong>User:</strong>
     <%= request.user.username %>
@@ -78,7 +148,39 @@ for us to show. %>
   <%= button_to "Approve Request", user_update_request_path(request.user), 
                 method: "put",
                 data: {confirm: "Are you sure?\nApproval removes the request"} %>
-<% end %>  
+<% end %>  -->
+
+<% count = 0 %>
+  <table class="table caption-top table-sm table-dark table-striped table-hover table-bordered">
+    <caption>List of user reservation requests today</caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User</th>
+        <th scope="col">Email</th>
+        <th scope="col">Time Requested</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+  <tbody>
+  <%# Add table data for each request %>
+  <% requests.each do |req| %>
+    <tr>
+    <% count += 1%>
+      <th scope="row"><%= count %></th>
+      <td><%= req.user.username %></td>
+      <td><%= req.user.email %></td>
+      <td><%= req.user.created_at.localtime.strftime("%B %e, %Y at %I:%M %p")%></td>
+      <td>
+        <%= button_to "Approve Request", user_update_request_path(req.user), 
+                method: "put",
+                data: {confirm: "Are you sure?\nApproval removes the request"},
+                class: "btn-success" %>
+      </td>
+    </tr>
+  <% end %>  
+  </tbody>
+</table>
 
 <h2>Add a reservation:</h2>
 <!-- <%= form_with model: [ @provider, @provider.reservations.build ] do |form| %>

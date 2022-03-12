@@ -11,10 +11,9 @@
   </head>
 
   <body style="background-color: black; color: pink">
-    <%= render 'layouts/alerts' %>
     <%= render 'layouts/nav' %>
-    
     <div class="container"><br>  
+      <%= render 'layouts/alerts' %>
       <%= yield %>
     </div>
   </body>
