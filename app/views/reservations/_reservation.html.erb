@@ -1,4 +1,4 @@
-<p>
+<!-- <p>
   <strong>User:</strong>
   <%= reservation.user.username %>
 </p>
@@ -20,4 +20,24 @@
   <%= link_to "Delete Reservation", [reservation.provider, reservation],
               method: :delete,
               data: {confirm: "Are you sure?"} %>
-</p>
+</p> -->
+
+
+<tr>
+<% count += 1%>
+  <th scope="row"><%= count %></th>
+  <td><%= reservation.user.username %></td>
+  <td><%= reservation.date %></td>
+  <td>
+    <% if reservation.is_confirmed %>
+      <strong style="color: lightgreen">Confirmed</strong>
+    <% else %>
+      <strong style="color: red">Not Confirmed</strong>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to "Delete Reservation", [reservation.provider, reservation],
+              method: :delete,
+              data: {confirm: "Are you sure?"} %>
+  </td>
+</tr>
