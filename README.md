@@ -3,10 +3,15 @@
 ## Getting Started
 
   ruby 3.0.2
+  
   rails 6.1.4.6
+  
   sqlite3 3.36.0
+  
   brew 3.3.4
+  
   node v17.0.1
+  
   yarn 1.22.17
 
 ## System dependencies
