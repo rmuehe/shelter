@@ -3,11 +3,13 @@ class RequestsController < ApplicationController
         @user = User.find(params[:user_id])
         #creates a request if there's not been one today or ever 
         if !@user.requests.last 
-          @user.requests.create(is_approved: false)  
+          @user.requests.create(request_params)
+          @user.requests.last.update(is_approved: false)  
         elsif @user.requests.last.created_at.localtime.to_date != Time.now.localtime.to_date    
-           @user.requests.create(is_approved: false)  
+           @user.requests.create(request_params)
+           @user.requests.last.update(is_approved: false)  
         end
-        redirect_to user_path(@user) #, notice: "You have requested a reservation today"
+        redirect_to user_path(@user), notice: "You have requested a reservation today"
     end
 
     def update
@@ -28,4 +30,10 @@ class RequestsController < ApplicationController
             redirect_to user_path(@user), notice: "No reservations to cancel today"
         end
     end
+
+    private
+        def request_params
+        params.require(:request).permit(:is_approved, provider_ids:[])
+        end
+
 end

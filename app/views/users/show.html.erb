@@ -20,6 +20,8 @@
   </div>
 <% end %>
 
+<%= render 'users/provider_check' %>
+
 <%= button_to "Request a reservation", user_create_request_path(@user), method: "post" %>
 
 <% if !@user.requests.last %>
@@ -27,9 +29,12 @@
 <% end %>
 
 <% if @user.requests.last %>
-  <% if @user.requests.last.created_at.localtime.to_date == Time.now.localtime.to_date %>
+  <% if User.find(params[:id]).requests.last.created_at != nil && User.find(params[:id]).requests.last.created_at.localtime.to_date == Time.now.localtime.to_date %>
     <div style="color: lightgreen">Reservation requested today</div>
   <% else %>
+    <h3> <%= @user.requests.last.inspect %></h3>
+     <h3> <%= params.inspect %></h3>
+     <h3> <%= User.find(params[:id]).requests.last.created_at.localtime.to_date == Time.now.localtime.to_date %></h3>
     <div style="color: lightred">No reservation requests today</div>
   <% end %>
 <% end %>

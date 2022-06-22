@@ -1,0 +1,33 @@
+<%= form_with model: [ @user, @user.requests.build ] do |f| %>
+<div class="field">
+  <%= f.label "Providers" %><br />
+  <%= f.collection_check_boxes :provider_ids, Provider.all, :id, :name do |b| %>
+    <div class="collection-check-box">
+      <%= b.check_box %>
+      <%= b.label %>
+    </div>
+  <% end %>
+</div> 
+  <%= button_to "Request a Reservation", user_create_request_path(@user), 
+                method: "post",
+                type: "submit",
+                class: "btn btn-primary" %>
+<% end %>
+<!-- <%= form_with model: [ @user, @user.requests.build ] do |f| %>
+  <form role="form form-group">
+  <%= f.collection_check_boxes :provider_ids, Provider.all, :id, :name do |b| %>
+    <label class="form-check-label">
+    <%= b.check_box %>
+    <%= b.label class: "form-check-label", 
+                 type: "checkbox" %> 
+    </label>
+  <% end %><br><br>
+  <%# <button type="submit" class="btn btn-primary">Request a Reservation</button> %>
+  <%= button_to "Request a Reservation", user_create_request_path(@user), 
+                method: "post",
+                type: "submit",
+                class: "btn btn-primary" %>
+
+  </form>
+<% end %> -->
+

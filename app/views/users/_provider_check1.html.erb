@@ -1,0 +1,33 @@
+<% providers = Provider.all %>
+<% count = 0 %>
+
+<%= form_with model: [ @user, @user.requests.build ] do |form| %>
+
+  <% providers.each do |provider| %>
+    <div class="form-check">
+      <%= form.label provider.id, 
+            class: "form-check-label", 
+            type: "checkbox", 
+            for: "defaultCheck#{count}" %>
+      <%= form.%>
+
+
+      <input class="form-check-input" type="checkbox" value="" id="defaultCheck<%= count %>">
+      <label class="form-check-label" for="defaultCheck<%= count %>">
+        <%= provider.name %>
+      </label>
+    </div>
+
+
+  <% end %>
+  
+</form>
+
+<%= button_to "Request a reservation", user_create_request_path(@user), method: "post" %>
+
+  <%# <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+    <label class="form-check-label" for="defaultCheck2">
+      Default checkbox 2
+    </label>
+  </div> %>

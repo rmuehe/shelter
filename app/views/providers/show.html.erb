@@ -128,7 +128,19 @@ for us to show.
 <%# Selects all unapproved requests from today only and displays them  %>
 <% requests = Request.all.where(is_approved: false, created_at: 
   Time.now.localtime.beginning_of_day..Time.now.localtime.end_of_day) %>
-<% unless requests == [] %>
+
+<% filtered_requests = [] %>
+<% requests.each do |r| %>
+  <% r.providers.each do |p| %>
+    <% if p.id == params[:id].to_i %>
+      <% filtered_requests << r %>
+      <%= r.inspect %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<% unless filtered_requests == [] %>
   <h2>Requests</h2>
   <%# <p>Be sure to reserve a client before approving a request</p>
   <p>Approving a request removes it from the queue</p> %>
@@ -164,13 +176,14 @@ for us to show.
     </thead>
   <tbody>
   <%# Add table data for each request %>
-  <% requests.each do |req| %>
+  <% filtered_requests.each do |req| %>
     <tr>
     <% count += 1%>
       <th scope="row"><%= count %></th>
       <td><%= req.user.username %></td>
       <td><%= req.user.email %></td>
-      <td><%= req.user.created_at.localtime.strftime("%B %e, %Y at %I:%M %p")%></td>
+      <!-- <td><%= req.user.created_at.localtime.strftime("%B %e, %Y at %I:%M %p")%></td> -->
+      <td><%= req.created_at.localtime.strftime("%B %e, %Y at %I:%M %p") %></td>
       <td>
         <%= button_to "Approve Request", user_update_request_path(req.user), 
                 method: "put",
